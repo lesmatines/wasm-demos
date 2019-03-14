@@ -1,0 +1,1 @@
+emcc math.c -s ONLY_MY_CODE=1 -s WASM=1 -s EXPORTED_FUNCTIONS="['_square','_plus','_minus','_factorial']" -o math.js

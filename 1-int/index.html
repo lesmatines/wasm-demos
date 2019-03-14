@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Compile C to WebAssembly</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <script src="../loader.js"></script>
+</head>
+
+<body>
+  <h1>Compile C to WebAssembly</h1>
+  <h3>COMMAND</h3>
+  <p>emcc math.c -s ONLY_MY_CODE=1 -s WASM=1 -s EXPORTED_FUNCTIONS="['_square','_plus','_minus','_factorial']" -o math.js</p>
+  <p>2 files generated: 1. math.wasm 2. math.js. The 2nd file is useless.</p>
+  <h3>CALL</h3>
+  <div id="pfSquare"></div>
+  <div id="pfPlus"></div>
+  <div id="pfMinus"></div>
+  <div id="pfFactorial1"></div>
+  <div id="pfFactorial2"></div>
+  <div id="pfFactorial3"></div>
+
+  <script>
+    loadWasm('math.wasm').then(exports => {
+      console.log('WEBASSEMBLY INSTANTIATED.');
+      document.getElementById('pfSquare').innerText = 'square(2) = ' + exports._square(2);
+      document.getElementById('pfPlus').innerText = 'plus(3) = ' + exports._plus(3);
+      document.getElementById('pfMinus').innerText = 'minus(2 + 5) = ' + exports._minus(2 + 5);
+      document.getElementById('pfFactorial1').innerText = 'factorial(5) = ' + exports._factorial(5);
+      document.getElementById('pfFactorial2').innerText = 'factorial(10) = ' + exports._factorial(10);
+      document.getElementById('pfFactorial3').innerText = 'factorial(11) = ' + exports._factorial(11);
+    });
+  </script>
+</body>
+
+</html>
